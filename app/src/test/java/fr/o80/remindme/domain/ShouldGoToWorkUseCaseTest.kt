@@ -1,4 +1,4 @@
-package fr.o80.remindme
+package fr.o80.remindme.domain
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName

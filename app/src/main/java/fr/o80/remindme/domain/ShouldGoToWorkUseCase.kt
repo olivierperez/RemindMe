@@ -1,4 +1,4 @@
-package fr.o80.remindme
+package fr.o80.remindme.domain
 
 import java.util.*
 
