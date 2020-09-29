@@ -2,18 +2,18 @@ package fr.o80.remindme.presentation
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import com.google.android.material.button.MaterialButton
 import fr.o80.remindme.R
 import fr.o80.remindme.domain.PopupNotificationUseCase
+import fr.o80.remindme.domain.ScheduleRemindersUseCase
 import fr.o80.remindme.domain.ShouldGoToWorkUseCase
 
 class HomeActivity : AppCompatActivity() {
 
     private val viewModel = HomeViewModel(ShouldGoToWorkUseCase(), PopupNotificationUseCase(this))
+    private val scheduleReminders = ScheduleRemindersUseCase(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +31,7 @@ class HomeActivity : AppCompatActivity() {
 
         viewModel.onCreate()
 
+        scheduleReminders()
     }
 
 }
