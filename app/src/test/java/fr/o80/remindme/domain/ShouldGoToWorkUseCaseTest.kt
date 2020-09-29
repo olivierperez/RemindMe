@@ -1,16 +1,21 @@
 package fr.o80.remindme.domain
 
+import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import java.util.*
+import java.util.Calendar
 import java.util.stream.Stream
 
+@ExtendWith(MockKExtension::class)
 internal class ShouldGoToWorkUseCaseTest {
 
-    private val shouldGoToWork = ShouldGoToWorkUseCase()
+    @InjectMockKs
+    lateinit var shouldGoToWork: ShouldGoToWorkUseCase
 
     @DisplayName("Should I stay at home?")
     @ParameterizedTest(name = "2020-{1}-{0} -> {2}")
