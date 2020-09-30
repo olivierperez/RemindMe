@@ -12,8 +12,11 @@ import fr.o80.remindme.domain.ShouldGoToWorkUseCase
 
 class HomeActivity : AppCompatActivity() {
 
-    private val viewModel = HomeViewModel(ShouldGoToWorkUseCase(), PopupNotificationUseCase(this))
-    private val scheduleReminders = ScheduleRemindersUseCase(this)
+    private val viewModel = HomeViewModel(
+        ShouldGoToWorkUseCase(),
+        PopupNotificationUseCase(this),
+        ScheduleRemindersUseCase(this)
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +33,6 @@ class HomeActivity : AppCompatActivity() {
         }
 
         viewModel.onCreate()
-
-        scheduleReminders()
     }
 
 }

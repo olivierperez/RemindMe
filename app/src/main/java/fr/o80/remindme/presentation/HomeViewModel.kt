@@ -8,12 +8,14 @@ import fr.o80.remindme.R
 import fr.o80.remindme.domain.MORNING_REMINDER_CHANNELID
 import fr.o80.remindme.domain.MORNING_REMINDER_ID
 import fr.o80.remindme.domain.PopupNotificationUseCase
+import fr.o80.remindme.domain.ScheduleRemindersUseCase
 import fr.o80.remindme.domain.ShouldGoToWorkUseCase
 import java.util.Calendar
 
 class HomeViewModel(
     private val shouldGoToWork: ShouldGoToWorkUseCase,
-    private val popupNotification: PopupNotificationUseCase
+    private val popupNotification: PopupNotificationUseCase,
+    private val scheduleRemindersUseCase: ScheduleRemindersUseCase
 ) : ViewModel() {
 
     private val _state = MutableLiveData<State>()
@@ -29,6 +31,8 @@ class HomeViewModel(
                 icon = R.drawable.ic_home
             )
         }
+
+        scheduleRemindersUseCase()
     }
 
     fun onButtonClicked() {

@@ -5,6 +5,7 @@ import fr.o80.remindme.R
 import fr.o80.remindme.domain.MORNING_REMINDER_CHANNELID
 import fr.o80.remindme.domain.MORNING_REMINDER_ID
 import fr.o80.remindme.domain.PopupNotificationUseCase
+import fr.o80.remindme.domain.ScheduleRemindersUseCase
 import fr.o80.remindme.domain.ShouldGoToWorkUseCase
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -30,6 +31,9 @@ internal class HomeViewModelTest {
     @MockK(relaxed = true)
     lateinit var popupNotificationUseCase: PopupNotificationUseCase
 
+    @MockK(relaxed = true)
+    lateinit var scheduleRemindersUseCase: ScheduleRemindersUseCase
+
     @InjectMockKs
     lateinit var viewModel: HomeViewModel
 
@@ -48,6 +52,14 @@ internal class HomeViewModelTest {
         @BeforeEach
         fun stayAtHome() {
             every { shouldGoToWorkUseCase.invoke(any()) } returns true
+        }
+
+        @Test
+        @DisplayName("Schedule reminders")
+        fun shouldScheduleReminders() {
+            viewModel.onCreate()
+
+            verify { scheduleRemindersUseCase.invoke() }
         }
 
         @Test
@@ -82,6 +94,14 @@ internal class HomeViewModelTest {
         @BeforeEach
         fun stayAtHome() {
             every { shouldGoToWorkUseCase.invoke(any()) } returns false
+        }
+
+        @Test
+        @DisplayName("Schedule reminders")
+        fun shouldScheduleReminders() {
+            viewModel.onCreate()
+
+            verify { scheduleRemindersUseCase.invoke() }
         }
 
         @Test
