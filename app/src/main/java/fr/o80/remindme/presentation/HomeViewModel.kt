@@ -6,17 +6,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import fr.o80.remindme.R
-import fr.o80.remindme.domain.MORNING_REMINDER_CHANNELID
-import fr.o80.remindme.domain.MORNING_REMINDER_ID
-import fr.o80.remindme.domain.PopupNotificationUseCase
 import fr.o80.remindme.domain.ScheduleRemindersUseCase
 import fr.o80.remindme.domain.ShouldGoToWorkUseCase
+import fr.o80.remindme.domain.UpdateSchedulesUseCase
 import java.util.Calendar
 
 class HomeViewModel @ViewModelInject constructor(
     private val shouldGoToWork: ShouldGoToWorkUseCase,
-    private val popupNotification: PopupNotificationUseCase,
-    private val scheduleRemindersUseCase: ScheduleRemindersUseCase
+    private val scheduleReminders: ScheduleRemindersUseCase,
+    private val updateSchedules: UpdateSchedulesUseCase
 ) : ViewModel() {
 
     private val _state = MutableLiveData<State>()
@@ -25,38 +23,28 @@ class HomeViewModel @ViewModelInject constructor(
     fun onCreate() {
         if (shouldGoToWork(Calendar.getInstance())) {
             _state.value = State(
+                hours = "08",
+                minutes = "00",
                 icon = R.drawable.ic_workplace
             )
         } else {
             _state.value = State(
+                hours = "08",
+                minutes = "00",
                 icon = R.drawable.ic_home
             )
         }
 
-        scheduleRemindersUseCase()
+        scheduleReminders(8, 0)
     }
 
-    fun onButtonClicked() {
-        if (shouldGoToWork(Calendar.getInstance())) {
-            popupNotification(
-                notificationId = MORNING_REMINDER_ID,
-                message = R.string.goToWork_message,
-                smallIcon = R.drawable.ic_workplace,
-                channelId = MORNING_REMINDER_CHANNELID,
-                channelName = R.string.morningReminder_channel
-            )
-        } else {
-            popupNotification(
-                notificationId = MORNING_REMINDER_ID,
-                message = R.string.stayAtHome_message,
-                smallIcon = R.drawable.ic_home,
-                channelId = MORNING_REMINDER_CHANNELID,
-                channelName = R.string.morningReminder_channel
-            )
-        }
+    fun onUpdateSchedulesClicked(hours: String, minutes: String) {
+        updateSchedules(hours.toInt(), minutes.toInt())
     }
 
     data class State(
+        val hours: String,
+        val minutes: String,
         @DrawableRes
         val icon: Int
     )

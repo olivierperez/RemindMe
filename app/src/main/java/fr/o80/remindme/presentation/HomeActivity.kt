@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import fr.o80.remindme.R
+import kotlinx.android.synthetic.main.activity_home.*
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
@@ -18,17 +17,20 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val button = findViewById<MaterialButton>(R.id.showNotification)
-
-        viewModel.state.observe(this) { state ->
-            button.visibility = View.VISIBLE
-            button.icon = ContextCompat.getDrawable(this, state.icon)
-            button.setOnClickListener {
-                viewModel.onButtonClicked()
-            }
-        }
-
+        viewModel.state.observe(this, ::bindState)
         viewModel.onCreate()
+    }
+
+    private fun bindState(state: HomeViewModel.State) {
+        goToSomewhereIcon.setImageResource(state.icon)
+
+        hours.setText(state.hours)
+        minutes.setText(state.minutes)
+
+        updateSchedules.visibility = View.VISIBLE
+        updateSchedules.setOnClickListener {
+            viewModel.onUpdateSchedulesClicked(hours.text.toString(), minutes.text.toString())
+        }
     }
 
 }

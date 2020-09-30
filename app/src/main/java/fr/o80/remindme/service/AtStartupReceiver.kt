@@ -18,7 +18,8 @@ class AtStartupReceiver : HiltBroadcastReceiver() {
 
         super.onReceive(context, intent)
 
-        scheduleReminders()
+        // TODO Aller chercher les bonnes valeurs
+        scheduleReminders(8, 0)
     }
 
 }
