@@ -2,21 +2,17 @@ package fr.o80.remindme.presentation
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
+import dagger.hilt.android.AndroidEntryPoint
 import fr.o80.remindme.R
-import fr.o80.remindme.domain.PopupNotificationUseCase
-import fr.o80.remindme.domain.ScheduleRemindersUseCase
-import fr.o80.remindme.domain.ShouldGoToWorkUseCase
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
-    private val viewModel = HomeViewModel(
-        ShouldGoToWorkUseCase(),
-        PopupNotificationUseCase(this),
-        ScheduleRemindersUseCase(this)
-    )
+    private val viewModel by viewModels<HomeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

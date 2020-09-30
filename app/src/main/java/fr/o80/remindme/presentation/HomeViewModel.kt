@@ -1,6 +1,7 @@
 package fr.o80.remindme.presentation
 
 import androidx.annotation.DrawableRes
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +13,7 @@ import fr.o80.remindme.domain.ScheduleRemindersUseCase
 import fr.o80.remindme.domain.ShouldGoToWorkUseCase
 import java.util.Calendar
 
-class HomeViewModel(
+class HomeViewModel @ViewModelInject constructor(
     private val shouldGoToWork: ShouldGoToWorkUseCase,
     private val popupNotification: PopupNotificationUseCase,
     private val scheduleRemindersUseCase: ScheduleRemindersUseCase

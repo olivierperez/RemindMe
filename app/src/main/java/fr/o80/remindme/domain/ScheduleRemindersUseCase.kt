@@ -4,10 +4,13 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import fr.o80.remindme.service.MorningReminderReceiver
 import java.util.Calendar
+import javax.inject.Inject
 
-class ScheduleRemindersUseCase(
+class ScheduleRemindersUseCase @Inject constructor(
+    @ApplicationContext
     private val context: Context
 ) {
 
