@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.RemindMeDay" parent="Theme.RemindMeDay24" />
+
+    <style name="Theme.RemindMeDay24" parent="Theme.RemindMeDayBase">
+        <!-- Specific API24+ -->
+    </style>
+
+</resources>
