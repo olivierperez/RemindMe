@@ -1,6 +1,6 @@
 package fr.o80.remindme.domain
 
-import java.util.*
+import java.util.Calendar
 import javax.inject.Inject
 
 class ShouldGoToWorkUseCase @Inject constructor() {

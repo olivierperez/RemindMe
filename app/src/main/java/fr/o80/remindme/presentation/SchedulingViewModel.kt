@@ -13,7 +13,7 @@ import fr.o80.remindme.domain.data.ScheduleRepository
 import fr.o80.remindme.domain.toTimeFormat
 import java.util.Calendar
 
-class HomeViewModel @ViewModelInject constructor(
+class SchedulingViewModel @ViewModelInject constructor(
     private val shouldGoToWork: ShouldGoToWorkUseCase,
     private val scheduleReminders: ScheduleRemindersUseCase,
     private val updateSchedules: UpdateSchedulesUseCase,

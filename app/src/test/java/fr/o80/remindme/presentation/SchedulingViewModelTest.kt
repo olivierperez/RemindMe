@@ -23,7 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
 @DisplayName("Home screen ViewModel")
-internal class HomeViewModelTest {
+internal class SchedulingViewModelTest {
 
     @MockK
     lateinit var shouldGoToWorkUseCase: ShouldGoToWorkUseCase
@@ -38,7 +38,7 @@ internal class HomeViewModelTest {
     lateinit var scheduleRepository: ScheduleRepository
 
     @InjectMockKs
-    lateinit var viewModel: HomeViewModel
+    lateinit var viewModel: SchedulingViewModel
 
     @BeforeEach
     fun setup() {
