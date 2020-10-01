@@ -5,6 +5,8 @@ import fr.o80.remindme.R
 import fr.o80.remindme.domain.ScheduleRemindersUseCase
 import fr.o80.remindme.domain.ShouldGoToWorkUseCase
 import fr.o80.remindme.domain.UpdateSchedulesUseCase
+import fr.o80.remindme.domain.data.ScheduleRepository
+import fr.o80.remindme.domain.data.SchedulingTime
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -32,6 +34,9 @@ internal class HomeViewModelTest {
     @MockK(relaxed = true)
     lateinit var updateSchedules: UpdateSchedulesUseCase
 
+    @MockK(relaxed = true)
+    lateinit var scheduleRepository: ScheduleRepository
+
     @InjectMockKs
     lateinit var viewModel: HomeViewModel
 
@@ -55,9 +60,11 @@ internal class HomeViewModelTest {
         @Test
         @DisplayName("Schedule reminders")
         fun shouldScheduleReminders() {
+            every { scheduleRepository.get() } returns SchedulingTime(7, 0)
+
             viewModel.onCreate()
 
-            verify { scheduleRemindersUseCase.invoke(8, 0) }
+            verify { scheduleRemindersUseCase.invoke(7, 0) }
         }
 
         @Test
@@ -91,9 +98,11 @@ internal class HomeViewModelTest {
         @Test
         @DisplayName("Schedule reminders")
         fun shouldScheduleReminders() {
+            every { scheduleRepository.get() } returns SchedulingTime(12, 30)
+
             viewModel.onCreate()
 
-            verify { scheduleRemindersUseCase.invoke(8, 0) }
+            verify { scheduleRemindersUseCase.invoke(12, 30) }
         }
 
         @Test
