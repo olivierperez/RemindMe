@@ -30,7 +30,8 @@ class PopupNotificationUseCase @Inject constructor(
         val notification = NotificationCompat.Builder(context, channelId)
             .setContentTitle(context.getString(message))
             .setSmallIcon(smallIcon)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setDefaults(NotificationCompat.DEFAULT_LIGHTS)
             .build()
 
         notificationManager.notify(
