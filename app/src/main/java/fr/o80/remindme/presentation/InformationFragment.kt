@@ -6,22 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 import fr.o80.remindme.R
-import kotlinx.android.synthetic.main.fragment_scheduling.*
+import kotlinx.android.synthetic.main.fragment_information.*
 
 @AndroidEntryPoint
-class SchedulingFragment : Fragment() {
+class InformationFragment : Fragment() {
 
-    private val viewModel by viewModels<SchedulingViewModel>()
+    private val viewModel by viewModels<InformationViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_scheduling, container, false)
+        return inflater.inflate(R.layout.fragment_information, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,14 +31,12 @@ class SchedulingFragment : Fragment() {
         viewModel.onCreate()
     }
 
-    private fun bindState(state: SchedulingViewModel.State) {
-        hours.setText(state.hours)
-        minutes.setText(state.minutes)
+    private fun bindState(state: InformationViewModel.State) {
+        goToSomewhereIcon.setImageResource(state.icon)
+        information.setText(state.information)
 
-        updateSchedules.visibility = View.VISIBLE
-        updateSchedules.setOnClickListener {
-            viewModel.onUpdateSchedulesClicked(hours.text.toString(), minutes.text.toString())
-            findNavController().popBackStack()
-        }
+        configurationButton.setOnClickListener(
+            Navigation.createNavigateOnClickListener(InformationFragmentDirections.actionConfigure())
+        )
     }
 }

@@ -12,12 +12,6 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                replace(R.id.main_content, SchedulingFragment.newInstance())
-            }
-        }
     }
 
 }
