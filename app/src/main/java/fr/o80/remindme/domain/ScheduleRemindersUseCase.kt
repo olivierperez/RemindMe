@@ -4,20 +4,23 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import fr.o80.remindme.service.MorningReminderReceiver
 import java.util.Calendar
+import javax.inject.Inject
 
-class ScheduleRemindersUseCase(
+class ScheduleRemindersUseCase @Inject constructor(
+    @ApplicationContext
     private val context: Context
 ) {
 
     private val alarmManager: AlarmManager
         get() = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-    operator fun invoke() {
+    operator fun invoke(hours: Int, minutes: Int) {
         val triggeringTime = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 8)
-            set(Calendar.MINUTE, 0)
+            set(Calendar.HOUR_OF_DAY, hours)
+            set(Calendar.MINUTE, minutes)
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
         }.timeInMillis

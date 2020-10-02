@@ -1,8 +1,9 @@
 package fr.o80.remindme.domain
 
 import java.util.*
+import javax.inject.Inject
 
-class ShouldGoToWorkUseCase {
+class ShouldGoToWorkUseCase @Inject constructor() {
 
     operator fun invoke(calendar: Calendar): Boolean {
         val isEvenDay = calendar.get(Calendar.DAY_OF_YEAR) % 2 == 0

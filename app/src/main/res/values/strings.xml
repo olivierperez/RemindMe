@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">RemindMe</string>
 
-    <string name="showNotification_buttonText">Do it</string>
+    <string name="updateSchedules_buttonText">Planifier les rappels</string>
 
     <string name="goToWork_message">Va au boulot !</string>
     <string name="stayAtHome_message">Canapééé</string>

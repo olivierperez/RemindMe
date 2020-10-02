@@ -2,10 +2,9 @@ package fr.o80.remindme.presentation
 
 import android.os.Looper
 import fr.o80.remindme.R
-import fr.o80.remindme.domain.MORNING_REMINDER_CHANNELID
-import fr.o80.remindme.domain.MORNING_REMINDER_ID
-import fr.o80.remindme.domain.PopupNotificationUseCase
+import fr.o80.remindme.domain.ScheduleRemindersUseCase
 import fr.o80.remindme.domain.ShouldGoToWorkUseCase
+import fr.o80.remindme.domain.UpdateSchedulesUseCase
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -28,7 +27,10 @@ internal class HomeViewModelTest {
     lateinit var shouldGoToWorkUseCase: ShouldGoToWorkUseCase
 
     @MockK(relaxed = true)
-    lateinit var popupNotificationUseCase: PopupNotificationUseCase
+    lateinit var scheduleRemindersUseCase: ScheduleRemindersUseCase
+
+    @MockK(relaxed = true)
+    lateinit var updateSchedules: UpdateSchedulesUseCase
 
     @InjectMockKs
     lateinit var viewModel: HomeViewModel
@@ -51,6 +53,14 @@ internal class HomeViewModelTest {
         }
 
         @Test
+        @DisplayName("Schedule reminders")
+        fun shouldScheduleReminders() {
+            viewModel.onCreate()
+
+            verify { scheduleRemindersUseCase.invoke(8, 0) }
+        }
+
+        @Test
         @DisplayName("Show the right icon")
         fun shouldGoToWork() {
             viewModel.onCreate()
@@ -59,18 +69,12 @@ internal class HomeViewModelTest {
         }
 
         @Test
-        @DisplayName("Popup the notification")
-        fun shouldNotifyGoToWork() {
-            viewModel.onButtonClicked()
+        @DisplayName("Update the schedules")
+        fun shouldUpdateSchedules() {
+            viewModel.onUpdateSchedulesClicked("99", "88")
 
             verify {
-                popupNotificationUseCase.invoke(
-                    notificationId = MORNING_REMINDER_ID,
-                    message = R.string.goToWork_message,
-                    smallIcon = R.drawable.ic_workplace,
-                    channelId = MORNING_REMINDER_CHANNELID,
-                    channelName = R.string.morningReminder_channel
-                )
+                updateSchedules.invoke(99, 88)
             }
         }
     }
@@ -85,6 +89,14 @@ internal class HomeViewModelTest {
         }
 
         @Test
+        @DisplayName("Schedule reminders")
+        fun shouldScheduleReminders() {
+            viewModel.onCreate()
+
+            verify { scheduleRemindersUseCase.invoke(8, 0) }
+        }
+
+        @Test
         @DisplayName("Show the right icon")
         fun shouldStayAtHome() {
             viewModel.onCreate()
@@ -93,18 +105,12 @@ internal class HomeViewModelTest {
         }
 
         @Test
-        @DisplayName("Popup the notification")
-        fun shouldNotifyStayAtHome() {
-            viewModel.onButtonClicked()
+        @DisplayName("Update the schedules")
+        fun shouldUpdateSchedules() {
+            viewModel.onUpdateSchedulesClicked("77", "66")
 
             verify {
-                popupNotificationUseCase.invoke(
-                    notificationId = MORNING_REMINDER_ID,
-                    message = R.string.stayAtHome_message,
-                    smallIcon = R.drawable.ic_home,
-                    channelId = MORNING_REMINDER_CHANNELID,
-                    channelName = R.string.morningReminder_channel
-                )
+                updateSchedules.invoke(77, 66)
             }
         }
     }
