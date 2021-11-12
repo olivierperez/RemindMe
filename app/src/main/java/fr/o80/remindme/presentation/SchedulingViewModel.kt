@@ -9,33 +9,38 @@ import fr.o80.remindme.R
 import fr.o80.remindme.domain.ScheduleRemindersUseCase
 import fr.o80.remindme.domain.ShouldGoToWorkUseCase
 import fr.o80.remindme.domain.UpdateSchedulesUseCase
+import fr.o80.remindme.domain.data.ScheduleRepository
+import fr.o80.remindme.domain.toTimeFormat
 import java.util.Calendar
 
-class HomeViewModel @ViewModelInject constructor(
+class SchedulingViewModel @ViewModelInject constructor(
     private val shouldGoToWork: ShouldGoToWorkUseCase,
     private val scheduleReminders: ScheduleRemindersUseCase,
-    private val updateSchedules: UpdateSchedulesUseCase
+    private val updateSchedules: UpdateSchedulesUseCase,
+    private val scheduleRepository: ScheduleRepository
 ) : ViewModel() {
 
     private val _state = MutableLiveData<State>()
     val state: LiveData<State> get() = _state
 
     fun onCreate() {
+        val (hours, minutes) = scheduleRepository.get()
+
         if (shouldGoToWork(Calendar.getInstance())) {
             _state.value = State(
-                hours = "08",
-                minutes = "00",
+                hours = hours.toTimeFormat(),
+                minutes =  minutes.toTimeFormat(),
                 icon = R.drawable.ic_workplace
             )
         } else {
             _state.value = State(
-                hours = "08",
-                minutes = "00",
+                hours = hours.toTimeFormat(),
+                minutes =  minutes.toTimeFormat(),
                 icon = R.drawable.ic_home
             )
         }
 
-        scheduleReminders(8, 0)
+        scheduleReminders(hours, minutes)
     }
 
     fun onUpdateSchedulesClicked(hours: String, minutes: String) {
