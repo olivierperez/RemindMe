@@ -9,8 +9,13 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class PopupNotificationUseCase(private val context: Context) {
+class PopupNotificationUseCase @Inject constructor(
+    @ApplicationContext
+    private val context: Context
+) {
 
     private val notificationManager: NotificationManagerCompat by lazy {
         NotificationManagerCompat.from(context)

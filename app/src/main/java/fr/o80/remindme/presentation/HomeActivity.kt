@@ -2,36 +2,35 @@ package fr.o80.remindme.presentation
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import com.google.android.material.button.MaterialButton
+import dagger.hilt.android.AndroidEntryPoint
 import fr.o80.remindme.R
-import fr.o80.remindme.domain.PopupNotificationUseCase
-import fr.o80.remindme.domain.ScheduleRemindersUseCase
-import fr.o80.remindme.domain.ShouldGoToWorkUseCase
+import kotlinx.android.synthetic.main.activity_home.*
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
-    private val viewModel = HomeViewModel(ShouldGoToWorkUseCase(), PopupNotificationUseCase(this))
-    private val scheduleReminders = ScheduleRemindersUseCase(this)
+    private val viewModel by viewModels<HomeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val button = findViewById<MaterialButton>(R.id.showNotification)
-
-        viewModel.state.observe(this) { state ->
-            button.visibility = View.VISIBLE
-            button.icon = ContextCompat.getDrawable(this, state.icon)
-            button.setOnClickListener {
-                viewModel.onButtonClicked()
-            }
-        }
-
+        viewModel.state.observe(this, ::bindState)
         viewModel.onCreate()
+    }
 
-        scheduleReminders()
+    private fun bindState(state: HomeViewModel.State) {
+        goToSomewhereIcon.setImageResource(state.icon)
+
+        hours.setText(state.hours)
+        minutes.setText(state.minutes)
+
+        updateSchedules.visibility = View.VISIBLE
+        updateSchedules.setOnClickListener {
+            viewModel.onUpdateSchedulesClicked(hours.text.toString(), minutes.text.toString())
+        }
     }
 
 }
